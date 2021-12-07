@@ -3,11 +3,13 @@ package com.gb.balyanova.springdata2.services;
 import com.gb.balyanova.springdata2.entities.Product;
 import com.gb.balyanova.springdata2.exceptions.ResourceNotFoundException;
 import com.gb.balyanova.springdata2.repositories.ProductRepository;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Properties;
 
 @Service
 public class ProductService {
@@ -44,6 +46,10 @@ public class ProductService {
     }
 
     public List<Product> findMoreThanValue(Integer max) { return productRepository.findMoreThanValue(max);
+    }
+
+    public Product save(Product product) {
+        return productRepository.save(product);
     }
 
 
