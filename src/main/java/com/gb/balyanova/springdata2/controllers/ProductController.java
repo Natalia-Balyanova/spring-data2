@@ -3,10 +3,7 @@ package com.gb.balyanova.springdata2.controllers;
 import com.gb.balyanova.springdata2.entities.Product;
 import com.gb.balyanova.springdata2.exceptions.ResourceNotFoundException;
 import com.gb.balyanova.springdata2.services.ProductService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -21,6 +18,11 @@ public class ProductController {
     @GetMapping("/products")
     public List<Product> findAll() {
         return productService.findAll();
+    }
+
+    @PostMapping("/products")
+    public Product findAll(@RequestBody Product product) {
+        return productService.save(product);
     }
 
     @GetMapping("/products/{id}")
@@ -43,7 +45,7 @@ public class ProductController {
     }
 
     @GetMapping("/products/price_between")
-    public List<Product> findProductsByPriceBetween(@RequestParam(defaultValue = "0") Integer min,@RequestParam(defaultValue = "1200") Integer max) {
+    public List<Product> findProductsByPriceBetween(@RequestParam(defaultValue = "0") Integer min, @RequestParam(defaultValue = "1200") Integer max) {
         return productService.findByPriceBetween(min, max);
     }
 

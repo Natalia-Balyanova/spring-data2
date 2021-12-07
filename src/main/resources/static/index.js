@@ -6,7 +6,7 @@ angular.module('app', []).controller('indexController', function ($scope, $http)
                 .then(function (response) {
                     $scope.ProductsList = response.data;
                 });
-        };
+        }
 
         $scope.deleteProduct = function (productId) {
             $http.get(contextPath + '/products/delete/' + productId)
@@ -28,6 +28,38 @@ angular.module('app', []).controller('indexController', function ($scope, $http)
             });
         }
 
-        $scope.loadProducts();
+        $scope.createProductJson = function () {
+            console.log($scope.newProductJson);
+            $http.post(contextPath + '/products', $scope.newProductJson)
+                           .then(function (response) {
+                                $scope.loadProducts();
+                           });
+        }
 
+        $scope.filterProducts = function() {
+            console.log($scope.findProductBetween);
+            $http({
+                   url: contextPath + '/products/price_between',
+                   method: 'get',
+                   params: {
+                       min: $scope.findProductBetween.min,
+                       max: $scope.findProductBetween.max
+                   }
+                }).then(function (response) {
+                        console.log(response.data);
+                        $scope.ProductsList = response.data;
+                        $scope.findProductBetween.min = null;
+                        $scope.findProductBetween.max = null;
+                });
+        }
+
+        //        $scope.loadPreviousPage = function (currentPage) {
+        //                        $scope.loadProducts(currentPage - 1);
+        //                    };
+        //
+        //        $scope.loadNextPage = function (currentPage) {
+        //                $scope.loadProducts(currentPage + 1);
+        //            };
+
+        $scope.loadProducts();
 });
